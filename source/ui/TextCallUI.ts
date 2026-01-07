@@ -25,7 +25,8 @@ export class TextCallUI implements ICallUI{
     start(): void {
         let op = 1;
         while(op!=0){
-            op = Number(prompt('Escolha uma opção/n1- Cadastrar/n2- Listar/n3- Marcar como concluido/n0- Sair'));
+            op = Number(prompt(
+    "Escolha uma opção:\n1 - Cadastrar\n2 - Listar\n3 - Marcar como concluído\n0 - Sair"));
             switch(op){
                 case 1:
                     let nome : string = prompt('Digite seu nome')!;
@@ -37,10 +38,51 @@ export class TextCallUI implements ICallUI{
                         alert('Não foi possível cadastrar o chamado');
                     }
                     break;
+
+
                 case 2:
-                    break;
+    const lista = this.callController.listarChamado();
+
+    if(lista.length === 0){
+        alert("Nenhum chamado cadastrado ainda.");
+    } else{
+        let mensagem = "Lista de Chamados:\n\n";
+
+        lista.forEach((c, index) => {
+            mensagem += `${index} - Solicitante: ${c.solicitante}\n`;
+            mensagem += `Problema: ${c.descricao}\n`;
+            mensagem += `Status: ${c.status ? "RESOLVIDO" : "ABERTO"}\n\n`;
+        });
+
+        alert(mensagem);
+    }
+    break;
+
                 case 3:
-                    break;
+    const chamados = this.callController.listarChamado();
+
+    if(chamados.length === 0){
+        alert("Não existem chamados para concluir.");
+        break;
+    }
+
+    let indice = Number(prompt("Digite o número do chamado que deseja concluir:"));
+
+    if(isNaN(indice) || indice < 0 || indice >= chamados.length){
+        alert("Índice inválido!");
+        break;
+    }
+
+    const selecionado = chamados[indice];
+    const concluido = this.callController.marcarComoAtendido(selecionado);
+
+    if(concluido){
+        alert("Chamado marcado como concluído com sucesso!");
+    } else {
+        alert("Não foi possível concluir o chamado.");
+    }
+    break;
+
                 case 0:
                     break;
                 default:

@@ -13,9 +13,14 @@ export class MemoryCallRepository implements ICallRepository{
      * @param chamado instância a ser adicionada
      * @returns true se adicionado com sucesso, false caso contrário
      */
-    criarNovoChamado(chamado: Chamado): boolean {
-        throw new Error("Method not implemented.");
-    }
+
+    private chamados: Chamado[] = [];
+
+   criarNovoChamado(chamado: Chamado): boolean {
+    this.chamados.push(chamado);
+    return true;
+}
+
     /**
      * Atualiza um chamado existente na coleção em memória.
      * A identificação do registro pode ser feita por referência de objeto ou por chave definida pelos alunos.
@@ -23,14 +28,22 @@ export class MemoryCallRepository implements ICallRepository{
      * @returns true se atualizado com sucesso, false caso contrário
      */
     atualizarChamado(chamado: Chamado): boolean {
-        throw new Error("Method not implemented.");
+    const index = this.chamados.indexOf(chamado);
+
+    if (index !== -1) {
+        this.chamados[index] = chamado;
+        return true;
     }
+
+    return false;
+}
+
     /**
      * Retorna todos os chamados armazenados atualmente na coleção em memória.
      * @returns lista de chamados
      */
-    listarChamados(): Array<Chamado> {
-        throw new Error("Method not implemented.");
-    }
+    listarChamados(): Chamado[] {
+    return this.chamados;
+}
 
 }
