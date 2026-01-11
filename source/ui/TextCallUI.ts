@@ -49,7 +49,7 @@ export class TextCallUI implements ICallUI{
         let mensagem = "Lista de Chamados:\n\n";
 
         lista.forEach((c, index) => {
-            mensagem += `${index} - Solicitante: ${c.solicitante}\n`;
+            mensagem += `${index +1} - Solicitante: ${c.solicitante}\n`;
             mensagem += `Problema: ${c.descricao}\n`;
             mensagem += `Status: ${c.status ? "RESOLVIDO" : "ABERTO"}\n\n`;
         });
@@ -66,7 +66,7 @@ export class TextCallUI implements ICallUI{
         break;
     }
 
-    let indice = Number(prompt("Digite o número do chamado que deseja concluir:"));
+    let indice = Number(prompt("Digite o número do chamado que deseja concluir:")) - 1;
 
     if(isNaN(indice) || indice < 0 || indice >= chamados.length){
         alert("Índice inválido!");
